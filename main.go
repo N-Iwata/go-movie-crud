@@ -48,6 +48,20 @@ func getMovie(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-type", "application/json")
 
 	params := mux.Vars(r)
+
+	// muxを使わない場合は以下のようにFindStringSubmatch使ってr.URL.Pathからidを取り出したりできそう
+	// var validPath = regexp.MustCompile("^/movies/([0-9]+)")
+	// q := validPath.FindStringSubmatch(r.URL.Path)
+	// if q == nil {
+	// 	http.NotFound(w, r)
+	// 	return
+	// }
+	// id, err := strconv.Atoi(q[1])
+	// if err != nil {
+	// 	http.NotFound(w, r)
+	// 	return
+	// }
+
 	for _, item := range movies {
 		if item.ID == params["id"] {
 			json.NewEncoder(w).Encode(item)
